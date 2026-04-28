@@ -12,14 +12,27 @@ public class MainMenu : MonoBehaviour
 
     public GameObject settingsMenu;
     public GameObject levelSelectMenu;
+    public GameObject mainMenu;
+
+    public Button[] levelButtons;
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        mainMenu.SetActive(true);
+        levelSelectMenu.SetActive(false);
+
+        for (int i = 0; i < levelButtons.Length; i++)
+        {
+            Button button = levelButtons[i];
+            button.onClick.AddListener(() => LevelManager.instance.SelectLevelNumber(button));
+        }
+
         StartCoroutine(SpawnWizards());
-        Debug.Log(levelSelectMenu.transform.childCount);
         for (int i = 0; i < levelSelectMenu.transform.childCount; i++)
         {
-            if (i < LevelManager.lastUnlockedLevel + 1)
+            if (i < LevelManager.lastUnlockedLevel+1)
             {
                 levelSelectMenu.transform.GetChild(i).gameObject.GetComponent<Image>().color = Color.white;
                 levelSelectMenu.transform.GetChild(i).gameObject.GetComponent<Button>().interactable = true;
@@ -51,7 +64,14 @@ public class MainMenu : MonoBehaviour
 
     public void SelectLevel()
     {
+        levelSelectMenu.SetActive(true);
+        mainMenu.SetActive(false);
+    }
 
+    public void CloseLevelSelect()
+    {
+        levelSelectMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
 
     public void OpenSettings()

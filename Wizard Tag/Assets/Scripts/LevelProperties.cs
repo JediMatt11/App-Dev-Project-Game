@@ -7,9 +7,8 @@ public class LevelProperties : ScriptableObject
 
     public int numEnemies;
     public int numTimeOfLevelSeconds;
-
+    public int LOSDistMult;
     public float enemySpeedRun;
-    public float enemySpeedWalk;
 
     public bool isNight;
 }

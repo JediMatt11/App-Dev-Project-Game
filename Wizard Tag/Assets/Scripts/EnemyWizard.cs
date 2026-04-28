@@ -9,7 +9,6 @@ public class EnemyWizard : MonoBehaviour
     public static Material enemyMat;
     public static float hueChangeSpeed = 0.75f;
     public Transform player;
-    public bool inView;
     public float attackRange;
     public float hitBox;
     public EnemyStateMachine enemyStateMachine { get; set; }
@@ -23,11 +22,16 @@ public class EnemyWizard : MonoBehaviour
     public AnimationStateSO animationStateSO;
     public AnimatorOverrideController animatorOverrideController;
     public static Dictionary<AnimationStateSO, AnimatorOverrideController> cache = new Dictionary<AnimationStateSO, AnimatorOverrideController>();
+    public LevelManager levelManager;
     private void Awake()
     {
-        enemyMat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         animator = GetComponent<Animator>();
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (enemyMat == null)
+        {
+            enemyMat = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        }
         SetAnimationOverrides();
         enemyStateMachine = new EnemyStateMachine();
         attackState = new AttackState(this, enemyStateMachine);
@@ -45,6 +49,7 @@ public class EnemyWizard : MonoBehaviour
     {
         enemyStateMachine.EnemyState.Update();
         ChangeMatHue();
+        ChangingStates();
     }
 
     
@@ -75,7 +80,7 @@ public class EnemyWizard : MonoBehaviour
         animator.runtimeAnimatorController = animatorOverrideController;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && enemyStateMachine.EnemyState is PatrolState && PlayerInView())
         {
@@ -101,7 +106,7 @@ public class EnemyWizard : MonoBehaviour
             }
         }
     
-    }
+    }*/
 
     public void ChangeMatHue()
     {
@@ -166,6 +171,24 @@ public class EnemyWizard : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void ChangingStates()
+    {
+        if (Vector3.Distance(transform.position, player.position) <= attackRange)
+        {
+            enemyStateMachine.ChangeState(attackState);
+        }
+        else if (Vector3.Distance(transform.position, player.position) <= GetComponent<SphereCollider>().radius * 4 * LevelManager.instance.levelProperties[LevelManager.instance.curLevelNum-1].LOSDistMult && PlayerInView())
+        {
+            enemyStateMachine.ChangeState(chaseState);
+            return;
+        }
+        else if (!PlayerInView())
+        {
+            enemyStateMachine.ChangeState(patrolState);
+            return;
+        }
     }
 
 }

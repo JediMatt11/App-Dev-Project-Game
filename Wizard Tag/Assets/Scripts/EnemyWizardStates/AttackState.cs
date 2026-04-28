@@ -25,20 +25,21 @@ public class AttackState : EnemyState
     public override void Update()
     {
         base.Update();
-        if (enemyWizard.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7f)
+        if (enemyWizard.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
         {
-            enemyWizard.navMeshAgent.SetDestination(enemyWizard.transform.position);
+            //enemyWizard.navMeshAgent.SetDestination(enemyWizard.transform.position);
             if (Vector3.Distance(enemyWizard.transform.position, enemyWizard.player.position) <= enemyWizard.hitBox)
             {
                 //TAG!!
+                enemyWizard.levelManager.Lose();
             }
         }
 
 
 
-        if (enemyWizard.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+        /*if (enemyWizard.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            if (enemyWizard.inView)
+            if (enemyWizard.PlayerInView())
             {
                 esm.ChangeState(enemyWizard.chaseState);
             }
@@ -46,6 +47,6 @@ public class AttackState : EnemyState
             {
                 esm.ChangeState(enemyWizard.patrolState);
             }
-        }
+        }*/
     }
 }

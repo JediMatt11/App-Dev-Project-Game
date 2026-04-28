@@ -1163,7 +1163,7 @@ Transform:
   m_GameObject: {fileID: 8667760312974192388}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.207, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1192,7 +1192,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_ObstacleAvoidanceType: 1
 --- !u!95 &5097832971567094991
 Animator:
   serializedVersion: 7
@@ -1228,13 +1228,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  inView: 0
   attackRange: 15
-  hitBox: 1.5
+  hitBox: 5
   navMeshAgent: {fileID: 607687661210867891}
   animator: {fileID: 5097832971567094991}
   animationStateSO: {fileID: 11400000, guid: 3b057b67f92d4c645a559e6bebc58ebb, type: 2}
   animatorOverrideController: {fileID: 22100000, guid: 819d603f651f5a74aaa93ece06cc40ac, type: 2}
+  levelManager: {fileID: 0}
 --- !u!54 &3674076488593917849
 Rigidbody:
   m_ObjectHideFlags: 0

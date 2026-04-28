@@ -23,16 +23,14 @@ public class PatrolState : EnemyState
     public override void Update()
     {
         base.Update();
-        if (enemyWizard.inView)
-        {
-            esm.ChangeState(enemyWizard.chaseState);
-        }
         if (reachedPoint)
         {
-            float x = Random.Range(-90f, 90f);
+            /*float x = Random.Range(-90f, 90f);
             float z = Random.Range(-90f, 90f);
             Vector3 randomDirection = new Vector3(x, 0f, z);
-            randomDirection.y = enemyWizard.transform.position.y;
+            randomDirection.y = enemyWizard.transform.position.y;*/
+            Vector3 randomDirection = Random.insideUnitSphere * Random.Range(-490f, 490f);
+            randomDirection.y = 0;
             enemyWizard.navMeshAgent.SetDestination(randomDirection + enemyWizard.transform.position);
             reachedPoint = false;
         }

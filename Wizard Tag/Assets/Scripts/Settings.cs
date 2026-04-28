@@ -7,6 +7,7 @@ public class Settings : MonoBehaviour
     public Slider volumeSlider;
     public Slider FOVSlider;
     public Button closeButton;
+    public GameObject panel;
 
     public static Settings instance;
     void Awake()
@@ -14,8 +15,6 @@ public class Settings : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            PlayerPrefs.SetFloat("Volume", 0.75f);
-            PlayerPrefs.SetFloat("FOV", 95f);
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -26,9 +25,10 @@ public class Settings : MonoBehaviour
 
     private void Start()
     {
-        volumeSlider = GameObject.Find("VolumeSlider").GetComponent<Slider>();
-        FOVSlider = GameObject.Find("FOVSlider").GetComponent<Slider>();
-        closeButton = GameObject.Find("CloseSettingsBtn").GetComponent<Button>();
+        panel.SetActive(false);
+        volumeSlider = panel.transform.GetChild(2).gameObject.GetComponent<Slider>();
+        FOVSlider = panel.transform.GetChild(1).gameObject.GetComponent<Slider>();
+        closeButton = panel.transform.GetChild(3).gameObject.GetComponent<Button>();
         closeButton.onClick.AddListener(CloseSettings);
         
         float savedVolume = PlayerPrefs.GetFloat("Volume");
@@ -78,7 +78,7 @@ public class Settings : MonoBehaviour
 
     public void CloseSettings()
     {
-        gameObject.SetActive(false);
+        panel.SetActive(false);
     }
 
     private void Update()
@@ -87,7 +87,9 @@ public class Settings : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                gameObject.SetActive(!gameObject.activeSelf);
+                panel.SetActive(!panel.activeSelf);
+                Cursor.lockState = panel.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+                Cursor.visible = panel.activeSelf ? true : false;
             }
         }
     }
