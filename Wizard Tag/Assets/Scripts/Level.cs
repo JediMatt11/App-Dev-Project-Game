@@ -15,6 +15,8 @@ public class Level : MonoBehaviour
 
     public LevelManager levelManager;
 
+    public Light directionalLight;
+
     void Update()
     {
         if (levelManager == null)

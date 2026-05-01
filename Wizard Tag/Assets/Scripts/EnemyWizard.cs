@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class EnemyWizard : MonoBehaviour
 {
-    public static Material enemyMat;
+    public Material enemyMat;
     public static float hueChangeSpeed = 0.75f;
     public Transform player;
     public float attackRange;

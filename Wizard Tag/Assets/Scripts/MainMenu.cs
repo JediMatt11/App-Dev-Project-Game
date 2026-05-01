@@ -16,6 +16,10 @@ public class MainMenu : MonoBehaviour
 
     public Button[] levelButtons;
 
+    public LevelManager levelManager;
+    public AudioSource mainMenuSFX;
+    public AudioClip clickClip;
+    public AudioClip levelClick;
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -45,6 +49,15 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (levelManager == null && settingsMenu == null)
+        {
+            levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            settingsMenu = levelManager.settingsMenu;
+        }
+    }
+
     public IEnumerator SpawnWizards()
     {
         while (true)
@@ -64,23 +77,27 @@ public class MainMenu : MonoBehaviour
 
     public void SelectLevel()
     {
+        mainMenuSFX.PlayOneShot(clickClip);
         levelSelectMenu.SetActive(true);
         mainMenu.SetActive(false);
     }
 
     public void CloseLevelSelect()
     {
+        mainMenuSFX.PlayOneShot(clickClip);
         levelSelectMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
 
     public void OpenSettings()
     {
+        mainMenuSFX.PlayOneShot(clickClip);
         settingsMenu.SetActive(true);
     }
 
     public void Quit()
     {
+        mainMenuSFX.PlayOneShot(clickClip);
         Application.Quit();
     }
 

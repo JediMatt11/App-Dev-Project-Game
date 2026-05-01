@@ -24,6 +24,8 @@ public class LevelManager : MonoBehaviour
     public bool hasWon;
     public bool hasLost;
 
+    public MainMenu mainMenu;
+
     void Awake()
     {
         if (instance == null)
@@ -40,9 +42,16 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         lastUnlockedLevel = PlayerPrefs.GetInt("LastUnlockedLevel");
+        mainMenu = GameObject.Find("MGMT").GetComponent<MainMenu>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
         //lastUnlockedLevel = 0;
         //PlayerPrefs.SetInt("LastUnlockedLevel", lastUnlockedLevel);
         //PlayerPrefs.Save();
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        mainMenu = GameObject.Find("MGMT").GetComponent<MainMenu>();
     }
 
     public void WonCurrentLevel(LevelProperties lp)
@@ -57,6 +66,10 @@ public class LevelManager : MonoBehaviour
 
     public void SelectLevelNumber(Button b)
     {
+        if (mainMenu != null)
+        {
+            mainMenu.mainMenuSFX.PlayOneShot(mainMenu.levelClick);
+        }
         int num = int.Parse(b.transform.GetChild(0).gameObject.GetComponent<Text>().text);
         StartCoroutine(LoadSampleSceneAsync("SampleScene", num));
     }
@@ -84,6 +97,7 @@ public class LevelManager : MonoBehaviour
     public void SetTimeOfDay(bool isNight)
     {
         RenderSettings.skybox = isNight ? nightSkybox : daySkybox;
+        curLevel.directionalLight.intensity = isNight ? 0.35f : 3f;
     }
 
     public void SetGeneralLevel(int numEnemies, int seconds)

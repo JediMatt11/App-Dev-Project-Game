@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public float slideCooldown = 1f;
     public float slideCooldownTime;
     public float slideSpeed = 35f;
+    public bool justSlid;
 
     public bool isSlideJumping = false;
     public float checkForSlideJumpCooldown = 0.08f;
@@ -44,8 +45,9 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 velocity;
     public bool isDashing = false;
     public bool canJump = true;
-
+    public Animator animator;
     
+    public AudioSource audioSource;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -57,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
         Movement();
         MovementInput();
         Jump();
+        AnimationProperties();
     }
 
     void FixedUpdate()
@@ -131,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = jumpForce;
             canJump = false;
             jumpedTime = Time.time;
+            audioSource.Play();
         }
         if (Time.time - jumpedTime <= jumpDashCooldownTime)
         {
@@ -159,8 +163,9 @@ public class PlayerMovement : MonoBehaviour
     public void Slide()
     {
 
-        if (Input.GetKeyDown(KeyCode.C) && !isSliding && isSprinting && isGrounded() && canSlide && characterController.velocity.z >= 0) //&& (vertical * transform.forward).magnitude > 0
+        if (Input.GetKeyDown(KeyCode.C) && !isSliding && isSprinting && isGrounded() && canSlide) //&& (vertical * transform.forward).magnitude > 0
         {
+            justSlid = true;
             isSliding = true;
             canSlide = false;
             StartCoroutine(slideTimer());
@@ -210,4 +215,32 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics.Raycast(transform.position, Vector3.down, characterController.height / 2 + groundedCheckDistance);
     }
+
+    public void AnimationProperties()
+    {
+        if (moveDirection.magnitude == 0 && isGrounded())
+        {
+            animator.SetBool("Idle", true);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", false);
+        }
+        else if (isSprinting && isGrounded())
+        {
+            animator.SetBool("Idle", false);
+            animator.SetBool("Walking", false);
+            animator.SetBool("Running", true);
+        }
+        else
+        {
+            animator.SetBool("Idle", false);
+            animator.SetBool("Walking", true);
+            animator.SetBool("Running", false);
+        }
+        if (isSliding && justSlid)
+        {
+            justSlid = false;
+            animator.SetTrigger("Slide");
+        }
+    }
+
 }

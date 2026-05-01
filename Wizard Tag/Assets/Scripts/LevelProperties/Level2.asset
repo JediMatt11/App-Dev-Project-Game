@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level2
   m_EditorClassIdentifier: 
   levelNumber: 2
-  numEnemies: 300
+  numEnemies: 350
   numTimeOfLevelSeconds: 75
   LOSDistMult: 2
   enemySpeedRun: 25
