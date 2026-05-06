@@ -78,34 +78,6 @@ public class EnemyWizard : MonoBehaviour
         animator.runtimeAnimatorController = animatorOverrideController;
     }
 
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && enemyStateMachine.EnemyState is PatrolState && PlayerInView())
-        {
-            enemyStateMachine.ChangeState(chaseState);
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player") && PlayerInView())
-        {
-            inView = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            inView = false;
-            if (enemyStateMachine.EnemyState is ChaseState)
-            {
-                enemyStateMachine.ChangeState(patrolState);
-            }
-        }
-    
-    }*/
-
     public void ChangeMatHue()
     {
         Color curColor = enemyMat.GetColor("_EmissionColor");
@@ -114,24 +86,6 @@ public class EnemyWizard : MonoBehaviour
         Color finalColor = Color.HSVToRGB(h, s, 1.0f);
         enemyMat.SetColor("_EmissionColor", finalColor);
     }
-
-    /*public bool PlayerInView()
-    {
-        Vector3 wiz = transform.position + Vector3.up * 1.5f;
-        Debug.DrawRay(wiz, (player.position + Vector3.up - wiz).normalized * GetComponent<SphereCollider>().radius, Color.red, 0.1f);
-        if (Physics.Raycast(wiz, (player.position + Vector3.up - wiz).normalized, out RaycastHit hit, GetComponent<SphereCollider>().radius))
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return false;
-    }*/
 
     public bool PlayerInView()
     {

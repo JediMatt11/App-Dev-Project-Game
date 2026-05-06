@@ -163,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
     public void Slide()
     {
 
-        if (Input.GetKeyDown(KeyCode.C) && !isSliding && isSprinting && isGrounded() && canSlide) //&& (vertical * transform.forward).magnitude > 0
+        if (Input.GetKeyDown(KeyCode.C) && !isSliding && isSprinting && isGrounded() && canSlide)
         {
             justSlid = true;
             isSliding = true;

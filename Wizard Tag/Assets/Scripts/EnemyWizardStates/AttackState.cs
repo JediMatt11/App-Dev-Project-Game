@@ -27,26 +27,11 @@ public class AttackState : EnemyState
         base.Update();
         if (enemyWizard.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.8f)
         {
-            //enemyWizard.navMeshAgent.SetDestination(enemyWizard.transform.position);
             if (Vector3.Distance(enemyWizard.transform.position, enemyWizard.player.position) <= enemyWizard.hitBox)
             {
                 //TAG!!
                 enemyWizard.levelManager.Lose();
             }
         }
-
-
-
-        /*if (enemyWizard.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-        {
-            if (enemyWizard.PlayerInView())
-            {
-                esm.ChangeState(enemyWizard.chaseState);
-            }
-            else
-            {
-                esm.ChangeState(enemyWizard.patrolState);
-            }
-        }*/
     }
 }

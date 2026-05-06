@@ -25,17 +25,7 @@ public class ChaseState : EnemyState
         base.Update();
         if (enemyWizard.player != null)
         {
-            /*if (!enemyWizard.PlayerInView())
-            {
-                esm.ChangeState(enemyWizard.patrolState);
-                Debug.Log("Patrol");
-                return;
-            }*/
             enemyWizard.navMeshAgent.SetDestination(enemyWizard.player.position);
-            /*if (Vector3.Distance(enemyWizard.transform.position, enemyWizard.player.position) <= enemyWizard.attackRange)
-            {
-                    esm.ChangeState(enemyWizard.attackState);
-                }*/
         }
     }
 }

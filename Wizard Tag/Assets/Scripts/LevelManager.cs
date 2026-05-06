@@ -45,6 +45,7 @@ public class LevelManager : MonoBehaviour
         mainMenu = GameObject.Find("MGMT").GetComponent<MainMenu>();
         SceneManager.sceneLoaded += OnSceneLoaded;
         //lastUnlockedLevel = 0;
+        //PlayerPrefs.DeleteAll();
         //PlayerPrefs.SetInt("LastUnlockedLevel", lastUnlockedLevel);
         //PlayerPrefs.Save();
     }
@@ -90,7 +91,6 @@ public class LevelManager : MonoBehaviour
         curLevelNum = num;
         curLevel = GameObject.Find("Level").GetComponent<Level>();
         SetTimeOfDay(levelProperties[num - 1].isNight);
-        //SetEnemyStats(levelProperties[num - 1].enemySpeedRun);
         SetGeneralLevel(levelProperties[num - 1].numEnemies, levelProperties[num - 1].numTimeOfLevelSeconds);
     }
 

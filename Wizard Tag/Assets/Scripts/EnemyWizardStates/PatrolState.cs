@@ -25,10 +25,6 @@ public class PatrolState : EnemyState
         base.Update();
         if (reachedPoint)
         {
-            /*float x = Random.Range(-90f, 90f);
-            float z = Random.Range(-90f, 90f);
-            Vector3 randomDirection = new Vector3(x, 0f, z);
-            randomDirection.y = enemyWizard.transform.position.y;*/
             Vector3 randomDirection = Random.insideUnitSphere * Random.Range(-490f, 490f);
             randomDirection.y = 0;
             enemyWizard.navMeshAgent.SetDestination(randomDirection + enemyWizard.transform.position);
